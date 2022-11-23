@@ -4,12 +4,13 @@ import android.os.Handler;
 import android.os.Looper;
 
 import com.fongmi.android.tv.impl.AsyncCallback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class CheckTask {
 

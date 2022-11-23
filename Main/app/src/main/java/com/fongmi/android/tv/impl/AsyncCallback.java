@@ -7,11 +7,12 @@ import com.google.android.exoplayer2.PlaybackException;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.okhttp.Callback;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public abstract class AsyncCallback implements ValueEventListener, Callback {
 
@@ -28,11 +29,11 @@ public abstract class AsyncCallback implements ValueEventListener, Callback {
 	}
 
 	@Override
-	public void onResponse(Response response) throws IOException {
+	public void onFailure(@NonNull Call call, @NonNull IOException e) {
 	}
 
 	@Override
-	public void onFailure(Request request, IOException e) {
+	public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 	}
 
 	@Override

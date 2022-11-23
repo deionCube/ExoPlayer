@@ -6,15 +6,13 @@ import android.os.Build;
 import android.text.TextUtils;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.core.content.FileProvider;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.BuildConfig;
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.impl.AsyncCallback;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -23,6 +21,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLConnection;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class FileUtil {
 
@@ -81,7 +84,7 @@ public class FileUtil {
 	private static void download() {
 		new OkHttpClient().newCall(new Request.Builder().url("").build()).enqueue(new AsyncCallback() {
 			@Override
-			public void onResponse(Response response) throws IOException {
+			public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 				if (!response.isSuccessful()) return;
 				File file = getCacheFile("update.apk");
 				FileOutputStream fos = new FileOutputStream(file);

@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.forcetech.Port;
 import com.forcetech.android.ForceTV;
 
 public class P5PService extends Service {
@@ -13,7 +14,7 @@ public class P5PService extends Service {
 	@Override
 	public IBinder onBind(Intent intent) {
 		forceTV = new ForceTV();
-		forceTV.start("p5p", ForceTV.P5P);
+		forceTV.start("p5p", Port.P5P);
 		return null;
 	}
 

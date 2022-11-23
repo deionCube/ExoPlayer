@@ -1,5 +1,6 @@
 package com.fongmi.android.tv.bean;
 
+import android.net.Uri;
 import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
@@ -8,6 +9,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.fongmi.android.tv.utils.Prefers;
+import com.fongmi.android.tv.utils.Utils;
 
 import java.util.Locale;
 
@@ -73,7 +75,7 @@ public class Channel extends Bean {
 	}
 
 	public String getUa() {
-		return TextUtils.isEmpty(ua) ? "" : ua;
+		return TextUtils.isEmpty(ua) ? Utils.getUserAgent() : ua;
 	}
 
 	public void setUa(String ua) {
@@ -96,16 +98,20 @@ public class Channel extends Bean {
 		this.type = type;
 	}
 
+	public String getScheme() {
+		return Uri.parse(getUrl()).getScheme().toLowerCase();
+	}
+
 	public boolean isTVBus() {
-		return getUrl().startsWith("tvbus://");
+		return getScheme().equals("tvbus");
 	}
 
 	public boolean isForce() {
-		return getUrl().toLowerCase().startsWith("p2p://") || getUrl().startsWith("p5p://");
+		return getScheme().startsWith("p") || getScheme().equals("mitv");
 	}
 
 	public boolean isZLive() {
-		return getUrl().startsWith("zlive://");
+		return getScheme().equals("zlive");
 	}
 
 	public void putKeep() {

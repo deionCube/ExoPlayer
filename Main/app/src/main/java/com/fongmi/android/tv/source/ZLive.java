@@ -6,8 +6,9 @@ import android.os.Looper;
 import com.fongmi.android.tv.impl.AsyncCallback;
 import com.fongmi.android.tv.utils.FileUtil;
 import com.google.android.exoplayer2.PlaybackException;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class ZLive {
 
@@ -15,6 +16,7 @@ public class ZLive {
 	private final OkHttpClient client;
 	private final Handler handler;
 	private AsyncCallback callback;
+	private boolean init;
 
 	private static class Loader {
 		static volatile ZLive INSTANCE = new ZLive();
@@ -32,20 +34,22 @@ public class ZLive {
 	public void init() {
 		try {
 			com.east.android.zlive.ZLive.INSTANCE.OnLiveStart(6677);
-		} catch (Exception e) {
+			init = true;
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void start(AsyncCallback callback, String source) {
+		if (!init) init();
 		this.callback = callback;
 		this.onPrepare(source);
 	}
 
 	public void destroy() {
 		try {
-			com.east.android.zlive.ZLive.INSTANCE.OnLiveStop();
-		} catch (Exception e) {
+			if (init) com.east.android.zlive.ZLive.INSTANCE.OnLiveStop();
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 	}
