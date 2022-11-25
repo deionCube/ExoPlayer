@@ -7,14 +7,14 @@ import android.os.IBinder;
 import com.forcetech.Port;
 import com.forcetech.android.ForceTV;
 
-public class P2PService extends Service {
+public class P3PService extends Service {
 
 	private ForceTV forceTV;
 
 	@Override
 	public IBinder onBind(Intent intent) {
 		forceTV = new ForceTV();
-		forceTV.start("p2p", Port.P2P);
+		forceTV.start("p3p", Port.P3P);
 		return null;
 	}
 

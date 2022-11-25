@@ -513,7 +513,8 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 	}
 
 	@Override
-	public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
+	public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode) {
+		super.onPictureInPictureModeChanged(isInPictureInPictureMode);
 		if (isInPictureInPictureMode) {
 			hideEpg();
 			hideUI();

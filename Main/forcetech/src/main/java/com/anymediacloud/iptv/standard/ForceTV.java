@@ -1,10 +1,15 @@
-package com.forcetech.android;
+package com.anymediacloud.iptv.standard;
+
+import com.gsoft.mitv.MainActivity;
 
 public class ForceTV {
 
-	public void start(String lib, int port) {
+	static {
+		MainActivity.start();
+	}
+
+	public void start(int port) {
 		try {
-			System.loadLibrary(lib);
 			start(port, 20971520);
 		} catch (Throwable ignored) {
 		}

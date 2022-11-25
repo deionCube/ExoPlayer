@@ -21,6 +21,5 @@ public class App extends Application {
 	public void onCreate() {
 		super.onCreate();
 		Force.get().init();
-		ZLive.get().init();
 	}
 }

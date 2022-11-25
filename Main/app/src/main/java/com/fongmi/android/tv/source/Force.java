@@ -11,12 +11,12 @@ import android.os.Looper;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.impl.AsyncCallback;
-import com.forcetech.android.ForceTV;
-import com.forcetech.service.P2PService;
-import com.forcetech.service.P5PService;
+import com.forcetech.Port;
 import com.google.android.exoplayer2.PlaybackException;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
+import com.gsoft.mitv.MainActivity;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 
 public class Force {
 
@@ -38,8 +38,7 @@ public class Force {
 	}
 
 	public void init() {
-		App.get().bindService(new Intent(App.get(), P2PService.class), mConn, Context.BIND_AUTO_CREATE);
-		App.get().bindService(new Intent(App.get(), P5PService.class), mConn, Context.BIND_AUTO_CREATE);
+		App.get().bindService(new Intent(App.get(), MainActivity.class), mConn, Context.BIND_AUTO_CREATE);
 	}
 
 	public void start(AsyncCallback callback, String source) {
@@ -56,17 +55,18 @@ public class Force {
 	}
 
 	public void onPrepare(String source) {
+		int port = Port.get(source);
 		Uri uri = Uri.parse(source);
 		String id = uri.getLastPathSegment();
-		String cmd = "http://127.0.0.1:" + ForceTV.getPort(source) + "/cmd.xml?cmd=switch_chan&server=" + uri.getHost() + ":" + uri.getPort() + "&id=" + id;
-		String result = "http://127.0.0.1:" + ForceTV.getPort(source) + "/" + id;
+		String cmd = "http://127.0.0.1:" + port + "/cmd.xml?cmd=switch_chan&server=" + uri.getHost() + ":" + uri.getPort() + "&id=" + id;
+		String result = "http://127.0.0.1:" + port + "/" + id;
 		handler.post(() -> onResponse(result));
 		connect(cmd);
 	}
 
 	private void connect(String url) {
 		try {
-			client.newCall(new Request.Builder().url(url).build()).execute();
+			client.newCall(new Request.Builder().url(url).header("user-agent", "MTV").build()).execute();
 		} catch (Exception e) {
 			handler.post(this::onError);
 		}
