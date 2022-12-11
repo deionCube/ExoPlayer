@@ -34,6 +34,7 @@ import com.fongmi.android.tv.ui.adapter.TypeAdapter;
 import com.fongmi.android.tv.ui.custom.FlipDetector;
 import com.fongmi.android.tv.ui.custom.PassDialog;
 import com.fongmi.android.tv.ui.custom.SettingDialog;
+import com.fongmi.android.tv.ui.custom.TransferDialog;
 import com.fongmi.android.tv.utils.Clock;
 import com.fongmi.android.tv.utils.ExoUtil;
 import com.fongmi.android.tv.utils.FileUtil;
@@ -96,6 +97,7 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 		binding.ijk.setListener(this);
 		mTypeAdapter.setOnItemClickListener(this::onItemClick);
 		mChannelAdapter.setOnItemClickListener(this::onItemClick);
+		binding.widget.uuid.setOnClickListener(view -> TransferDialog.show(this));
 		binding.ijk.setOnTouchListener((view, event) -> mDetector.onTouchEvent(event));
 		binding.surface.setOnTouchListener((view, event) -> mDetector.onTouchEvent(event));
 		binding.texture.setOnTouchListener((view, event) -> mDetector.onTouchEvent(event));

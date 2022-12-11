@@ -5,6 +5,7 @@
     <string name="app_unlock">已解鎖</string>
     <string name="app_update">發現新版本</string>
     <string name="app_uuid">UUID : <xliff:g name="name">%s</xliff:g></string>
+    <string name="app_transfer">移機成功，請重新啟動</string>
 
     <!-- Error -->
     <string name="error_network">無法連線至 Google 服務</string>
