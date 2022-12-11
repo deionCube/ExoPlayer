@@ -466,7 +466,9 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 
 	@Override
 	public void onKeyCenter() {
-		if (isVisible(binding.recycler)) {
+		if (isVisible(binding.widget.uuid)) {
+			binding.widget.uuid.performClick();
+		} else if (isVisible(binding.recycler)) {
 			if (mChannelAdapter.isFocus()) mChannelAdapter.setChannel();
 			else if (mTypeAdapter.isFocus()) mTypeAdapter.onKeyCenter();
 		} else {
