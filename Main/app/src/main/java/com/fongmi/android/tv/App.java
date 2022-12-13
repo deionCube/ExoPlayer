@@ -15,10 +15,4 @@ public class App extends Application {
 	public static App get() {
 		return instance;
 	}
-
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		Force.get().init();
-	}
 }
