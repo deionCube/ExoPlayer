@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.SystemClock;
 
 import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.impl.AsyncCallback;
@@ -23,6 +24,7 @@ public class Force {
 	private final OkHttpClient client;
 	private final Handler handler;
 	private AsyncCallback callback;
+	private boolean init;
 
 	private static class Loader {
 		static volatile Force INSTANCE = new Force();
@@ -42,13 +44,16 @@ public class Force {
 	}
 
 	public void start(AsyncCallback callback, String source) {
+		if (!init) init();
+		while (!init) SystemClock.sleep(10);
 		this.callback = callback;
 		this.onPrepare(source);
 	}
 
 	public void destroy() {
 		try {
-			App.get().unbindService(mConn);
+			if (init) App.get().unbindService(mConn);
+			init = false;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,12 +88,12 @@ public class Force {
 	private final ServiceConnection mConn = new ServiceConnection() {
 		@Override
 		public void onServiceConnected(ComponentName name, IBinder service) {
-
+			init = true;
 		}
 
 		@Override
 		public void onServiceDisconnected(ComponentName name) {
-
+			init = false;
 		}
 	};
 }

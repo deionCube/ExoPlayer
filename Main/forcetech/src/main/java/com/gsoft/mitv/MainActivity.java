@@ -15,6 +15,7 @@ public class MainActivity extends Service {
 
 	private static WeakReference<MainActivity> ref;
 	private ForceTV forceTV;
+	private IBinder binder;
 
 	static {
 		System.loadLibrary("mitv");
@@ -32,6 +33,7 @@ public class MainActivity extends Service {
 		ref = new WeakReference<>(this);
 		try {
 			loadAsset();
+			binder = new LocalBinder();
 		} catch (Throwable ignored) {
 		}
 	}
@@ -40,7 +42,7 @@ public class MainActivity extends Service {
 	public IBinder onBind(Intent intent) {
 		forceTV = new ForceTV();
 		forceTV.start(Port.MTV);
-		return null;
+		return binder;
 	}
 
 	@Override
