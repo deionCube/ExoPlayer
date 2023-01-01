@@ -56,7 +56,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore'
     implementation 'com.google.firebase:firebase-storage'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
-    implementation 'net.java.dev.jna:jna:5.11.0'
+    implementation 'net.java.dev.jna:jna:5.12.1'
     implementation 'org.jsoup:jsoup:1.15.3'
     annotationProcessor 'androidx.room:room-compiler:2.4.3'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
