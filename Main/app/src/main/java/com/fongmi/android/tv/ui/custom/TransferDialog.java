@@ -19,7 +19,6 @@ import androidx.fragment.app.Fragment;
 
 import com.fongmi.android.tv.databinding.DialogTransferBinding;
 import com.fongmi.android.tv.ui.PlayerActivity;
-import com.fongmi.android.tv.utils.Token;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -78,7 +77,6 @@ public class TransferDialog extends BottomSheetDialogFragment {
 	private void transfer(View view) {
 		String uuid = binding.uuid.getText().toString().trim().toLowerCase(Locale.ROOT);
 		if (TextUtils.isEmpty(uuid)) return;
-		Token.transfer(uuid);
 		dismiss();
 	}
 
