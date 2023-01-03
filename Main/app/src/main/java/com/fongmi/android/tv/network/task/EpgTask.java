@@ -45,7 +45,7 @@ public class EpgTask {
     private void doInBackground(Channel item) {
         try {
             String date = formatDate.format(new Date());
-            String epg = String.format("https://epg.112114.xyz/?ch=%s&date=%s", item.getName(), date);
+            String epg = String.format("https://epg.112114.xyz/?ch=%s&date=%s", item.getEpg(), date);
             if (item.getData().equal(date)) onPostExecute(item.getData().getEpg());
             else getEpg(epg, item);
         } catch (Exception e) {
