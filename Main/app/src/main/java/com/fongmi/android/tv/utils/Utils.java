@@ -11,6 +11,8 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 
+import androidx.annotation.StringRes;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
@@ -18,6 +20,8 @@ import com.fongmi.android.tv.App;
 import com.fongmi.android.tv.BuildConfig;
 import com.google.android.exoplayer2.util.Util;
 import com.google.common.net.HttpHeaders;
+
+import java.text.SimpleDateFormat;
 
 public class Utils {
 
@@ -27,6 +31,10 @@ public class Utils {
 
 	public static String getString(int resId) {
 		return App.get().getString(resId);
+	}
+
+	public static String getString(@StringRes int resId, Object... formatArgs) {
+		return App.get().getString(resId, formatArgs);
 	}
 
 	public static int dp2px(int dpValue) {
@@ -135,5 +143,13 @@ public class Utils {
 
 	public static String getUserAgent() {
 		return Util.getUserAgent(App.get(), App.get().getPackageName().concat(".").concat(getUUID()));
+	}
+
+	public static long format(SimpleDateFormat format, String src) {
+		try {
+			return format.parse(src).getTime();
+		} catch (Exception e) {
+			return 0;
+		}
 	}
 }

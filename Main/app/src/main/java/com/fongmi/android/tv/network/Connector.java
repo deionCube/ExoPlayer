@@ -27,7 +27,6 @@ public class Connector {
 
 	public Connector connect() throws IOException {
 		conn = (HttpURLConnection) new URL(url).openConnection();
-		conn.setRequestProperty(HttpHeaders.USER_AGENT, Utils.getUserAgent());
 		conn.setInstanceFollowRedirects(false);
 		conn.setConnectTimeout(5000);
 		conn.setReadTimeout(5000);

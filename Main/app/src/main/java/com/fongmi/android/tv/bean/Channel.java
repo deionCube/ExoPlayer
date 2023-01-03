@@ -8,6 +8,7 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import com.fongmi.android.tv.network.task.EpgTask;
 import com.fongmi.android.tv.utils.Prefers;
 import com.fongmi.android.tv.utils.Utils;
 
@@ -25,6 +26,8 @@ public class Channel extends Bean {
 	private String ua;
 	private boolean dynamic;
 
+	@Ignore
+	private Epg data;
 	@Ignore
 	private Type type;
 
@@ -88,6 +91,14 @@ public class Channel extends Bean {
 
 	public void setDynamic(boolean dynamic) {
 		this.dynamic = dynamic;
+	}
+
+	public Epg getData() {
+		return data == null ? new Epg() : data;
+	}
+
+	public void setData(Epg data) {
+		this.data = data;
 	}
 
 	public Type getType() {
