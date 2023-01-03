@@ -2,7 +2,6 @@ package com.fongmi.android.tv.network.task;
 
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 
 import com.fongmi.android.tv.R;
 import com.fongmi.android.tv.bean.Channel;
@@ -24,14 +23,12 @@ public class EpgTask {
     private ExecutorService executor;
     private AsyncCallback callback;
     private final Handler handler;
-    private final String url;
 
     public static EpgTask create(AsyncCallback callback) {
         return new EpgTask(callback);
     }
 
     public EpgTask(AsyncCallback callback) {
-        this.url = "https://epg.112114.xyz/?ch={epg}&date={date}";
         this.formatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         this.formatTime = new SimpleDateFormat("yyyy-MM-ddHH:mm", Locale.getDefault());
         this.executor = Executors.newSingleThreadExecutor();
@@ -41,14 +38,14 @@ public class EpgTask {
 
     public EpgTask run(Channel item) {
         if (item.getEpg().isEmpty()) callback.onResponse(Utils.getString(R.string.channel_epg));
-        executor.submit(() -> doInBackground(item));
+        else executor.submit(() -> doInBackground(item));
         return this;
     }
 
     private void doInBackground(Channel item) {
         try {
             String date = formatDate.format(new Date());
-            String epg = url.replace("{epg}", item.getEpg()).replace("{date}", date);
+            String epg = String.format("https://epg.112114.xyz/?ch=%s&date=%s", item.getName(), date);
             if (item.getData().equal(date)) onPostExecute(item.getData().getEpg());
             else getEpg(epg, item);
         } catch (Exception e) {
