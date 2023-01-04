@@ -42,6 +42,7 @@ import com.fongmi.android.tv.utils.KeyDown;
 import com.fongmi.android.tv.utils.Notify;
 import com.fongmi.android.tv.utils.Prefers;
 import com.fongmi.android.tv.utils.Token;
+import com.fongmi.android.tv.utils.Trans;
 import com.fongmi.android.tv.utils.Utils;
 import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.PlaybackException;
@@ -53,6 +54,9 @@ import com.lodz.android.mmsplayer.ijk.media.IRenderView;
 import com.lodz.android.mmsplayer.ijk.setting.IjkPlayerSetting;
 import com.lodz.android.mmsplayer.impl.MmsVideoView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 public class PlayerActivity extends AppCompatActivity implements Player.Listener, MmsVideoView.Listener, VerifyReceiver.Callback, KeyDownImpl {
@@ -60,6 +64,7 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 	private final Runnable mShowUUID = this::showUUID;
 	private final Runnable mHideEpg = this::hideEpg;
 	private ActivityPlayerBinding binding;
+	private SimpleDateFormat mFormatDate;
 	private GestureDetector mDetector;
 	private ChannelAdapter mChannelAdapter;
 	private TypeAdapter mTypeAdapter;
@@ -84,10 +89,12 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 		mHandler = new Handler();
 		mKeyDown = KeyDown.create(this);
 		mDetector = FlipDetector.create(this);
+		mFormatDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
 		VerifyReceiver.create(this);
 		ApiService.getIP();
 		showProgress();
 		Token.check();
+		Trans.init();
 		setView();
 	}
 
@@ -156,8 +163,8 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 	private void onItemClick(Channel item) {
 		TVBus.get().stop();
 		showProgress();
+		checkEpg(item);
 		showEpg(item);
-		getEpg(item);
 		getUrl(item);
 		hideUI();
 	}
@@ -169,6 +176,16 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 		} else {
 			mChannelAdapter.setFocus(true);
 			onFind(Prefers.getKeep());
+		}
+	}
+
+	private void checkEpg(Channel item) {
+		String date = mFormatDate.format(new Date());
+		if (item.getData().equal(date)) {
+			setEpg(item.getData().getEpg());
+		} else {
+            binding.epg.play.setText(R.string.channel_epg);
+			getEpg(item);
 		}
 	}
 

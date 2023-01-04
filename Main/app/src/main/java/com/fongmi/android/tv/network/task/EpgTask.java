@@ -46,17 +46,12 @@ public class EpgTask {
         try {
             String date = formatDate.format(new Date());
             String epg = String.format("https://epg.112114.xyz/?ch=%s&date=%s", item.getEpg(), date);
-            if (item.getData().equal(date)) onPostExecute(item.getData().getEpg());
-            else getEpg(epg, item);
+            String result = Connector.link(epg).getResult();
+            item.setData(Epg.objectFrom(result, formatTime));
+            onPostExecute(item.getData().getEpg());
         } catch (Exception e) {
             onPostExecute(Utils.getString(R.string.channel_epg));
         }
-    }
-
-    private void getEpg(String epg, Channel item) throws Exception {
-        String result = Connector.link(epg).getResult();
-        item.setData(Epg.objectFrom(result, formatTime));
-        onPostExecute(item.getData().getEpg());
     }
 
     private void onPostExecute(String result) {
