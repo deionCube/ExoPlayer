@@ -184,7 +184,7 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 		if (item.getData().equal(date)) {
 			setEpg(item.getData().getEpg());
 		} else {
-            binding.epg.play.setText(R.string.channel_epg);
+			setEpg(getString(R.string.channel_epg));
 			getEpg(item);
 		}
 	}
@@ -316,6 +316,7 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 
 	private void showEpg(Channel item) {
 		mHandler.removeCallbacks(mHideEpg);
+		mHandler.postDelayed(mHideEpg, 5000);
 		binding.epg.name.setSelected(true);
 		binding.epg.name.setText(item.getName());
 		binding.epg.number.setText(item.getNumber());
@@ -326,7 +327,6 @@ public class PlayerActivity extends AppCompatActivity implements Player.Listener
 	private void setEpg(String epg) {
 		binding.epg.play.setText(epg);
 		binding.epg.play.setSelected(true);
-		mHandler.postDelayed(mHideEpg, 5000);
 	}
 
 	private void showController() {
